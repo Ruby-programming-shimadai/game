@@ -1,69 +1,28 @@
 require 'dxruby'
 
-require_relative 'apple'
-require_relative 'bomb'
 require_relative 'player'
+require_relative 'enemy'
 
+font=Font.new(32)
+player_img=Image.load("image/player.png")
+enemy_img=Image.load("image/enemy.png")
+ground_img = Image.load("image/ground.png")
 
-ground_img = Image.load("images/apple.png") # 背景の作成
-font = Font.new(32)
-
-apples = []
-apple_n = 5
-apple_n.times do
-  apples << Apple.new()
+player=Player.new(320,240,player_img)
+$PlayerShot = []
+enemies=[]
+10.times do
+    enemies << Enemy.new(rand(0..(640-32-1)),rand((480-32-1)),enemy_img)
 end
 
-bombs = []
-bomb_n = 5
-bomb_n.times do
-  bombs << Bomb.new()
-end
-
-player = Player.new()
 
 Window.loop do
-  Window.draw_scale(0,0,ground_img,100,100) # 背景の描画
-  if player.active
-    Sprite.update(apples)
-    Sprite.update(bombs)
+    Window.draw_scale(0,0,ground_img,1,1)
     player.update
+    Sprite.update($PlayerShot)
 
-    Sprite.check(player, apples)
-    Sprite.clean(apples)
-    (apple_n - apples.size).times do
-      apples << Apple.new()
-    end
+    Sprite.draw(enemies)
+    Window.draw_font(10,0,"スコア：#{player.score}",font)
 
-    Sprite.check(bombs, player)
-    Sprite.clean(bombs)
-    (bomb_n - bombs.size).times do
-      bombs << Bomb.new()
-    end
-  end
-
-  Sprite.draw(apples)
-  Sprite.draw(bombs)
-  player.draw
-
-  Window.draw_font(10, 10, "落ち物ゲーム　スコア：#{player.score}", font, {color: C_BLUE})
-
-  if !player.active # 以下追加
-    if player.game_end
-      Window.draw_font(210, 190, "ゲームオーバー", font, {color: C_BLUE})
-    end
-    Window.draw_font(120, 282, "スペースキー：ゲームスタート", font, {color: C_BLUE})
-    Window.draw_font(181, 314, "ESCキー：ゲーム終了", font, {color: C_BLUE})
-    if Input.key_push?(K_SPACE)
-      if player.game_end
-        apples.map {|apple| apple.vanish}
-        Sprite.clean(apples)
-        bombs.map {|bomb| bomb.vanish}
-        Sprite.clean(bombs)
-      end
-      player.restart
-    elsif Input.key_push?(K_ESCAPE)
-      break
-    end
-  end
+    Sprite.check($PlayerShot,enemies)
 end
