@@ -8,11 +8,11 @@ player_img=Image.load("image/player.png")
 enemy_img=Image.load("image/object1_new.png")
 ground_img = Image.load("image/ground.png")
 
-player=Player.new(320,240,player_img)
+player=Player.new(320,400,player_img)
 $PlayerShot = []
 enemies=[]
 10.times do
-    enemies << Enemy.new(rand(0..(640-32-1)),rand((480-32-1)),enemy_img)
+    enemies << Enemy.new(rand(0..(640-32-1)),rand((300-32-1)),enemy_img)
 end
 
 
