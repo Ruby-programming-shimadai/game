@@ -23,7 +23,8 @@ end
 class PlayerShot < Sprite
   def initialize(x,y)
       super
-      self.image=Image.load("image/object2_new.png")
+      @score = 0
+      self.image=Image.load("image/bullet_new.png")
       self.x = x
       self.y = y
   end
@@ -36,4 +37,5 @@ class PlayerShot < Sprite
           self.vanish
       end
   end
+
 end
