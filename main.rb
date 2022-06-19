@@ -5,7 +5,7 @@ require_relative 'enemy'
 
 font=Font.new(32)
 player_img=Image.load("image/player.png")
-enemy_img=Image.load("image/enemy.png")
+enemy_img=Image.load("image/object1_new.png")
 ground_img = Image.load("image/ground.png")
 
 player=Player.new(320,240,player_img)
