@@ -5,7 +5,7 @@ class Enemy < Sprite
 
   def update
       self.y += 1
-      if self.y>=400
+      if self.y>=480
           self.vanish
       end
   end
