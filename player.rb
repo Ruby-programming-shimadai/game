@@ -1,7 +1,7 @@
 class Player < Sprite
-    attr_accessor :score
+    attr_accessor :gameover
     def initialize(x,y,image)
-        @score = 0
+        @gameover = false
         super
     end
 
@@ -14,13 +14,18 @@ class Player < Sprite
         end
     end
 
+    def hit
+        self.vanish
+        @gameover = true
+    end
+
 end
 
 class PlayerShot < Sprite
     def initialize(x,y)
         @sound = Sound.new("sound/explosion.wav")
         super
-        self.image=Image.load("image/bullet_new.png")
+        self.image=Image.load("image/bullet.png")
         self.x = x
         self.y = y
     end
